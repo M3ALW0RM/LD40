@@ -102,3 +102,15 @@ void Player::SetAction(PlayerAction action, bool state)
 	m_actions[action] = state;
 }
 
+void Player::PickupItem(Item * item)
+{
+	try 
+	{
+		inventory.at(item->GetSlot());
+	}
+	catch (std::out_of_range)
+	{
+		inventory[item->GetSlot()] = item;
+	}
+}
+

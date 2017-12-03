@@ -74,10 +74,8 @@ void Game::drawFrame()
 	m_window.clear();
 
 	m_room.Draw(m_window);
-	m_player.DrawAnimations(m_window);
-	m_window.draw(m_player.m_healthBar);
-	m_window.draw(m_player.m_staminaBar);
-	m_window.draw(m_item);
+	m_player.Draw(m_window);
+	m_item.Draw(&m_window);
 	m_window.display();
 }
 

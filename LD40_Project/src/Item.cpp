@@ -1,9 +1,41 @@
 #include "Item.h"
 #include <SFML\Graphics\Texture.hpp>
 #include <AssetsManager.h>
+#include <string>
+
+void Item::BuildDescriptiveTest()
+{
+	sf::Vector2f pos = getPosition() + sf::Vector2f(getLocalBounds().width, 0);
+	descriptiveText.setPosition(pos);
+	std::string tmp;
+	tmp += name;
+	tmp += "\n";
+	tmp += "Damage: " + std::to_string(damage) + "\n";
+	for (int i = 0; i < damageDistribution.size(); ++i)
+	{
+		switch (damageDistribution[i].first)
+		{
+		case elementType::KINETIC:
+			tmp += "	-From Kinetic: " + std::to_string(damageDistribution[i].second) + "\n";
+			break;
+		case elementType::FIRE:
+			tmp += "	-From Fire: " + std::to_string(damageDistribution[i].second) + "\n";
+			break;
+		case elementType::MAGIC:
+			tmp += "	-From Magic: " + std::to_string(damageDistribution[i].second) + "\n";
+			break;
+		default:
+			break;
+		}
+	}
+	descriptiveText.setString(tmp);
+}
 
 Item::Item()
 {
+	font.loadFromFile("Resources/arial.ttf");
+	descriptiveText.setFont(font);
+	setPosition(sf::Vector2f(100, 100));
 }
 
 
@@ -13,6 +45,7 @@ Item::~Item()
 
 void Item::Init(int powerLevel, slotType slot)
 {
+	type = slot;
 	switch (slot)
 	{
 	case HAND:
@@ -20,15 +53,15 @@ void Item::Init(int powerLevel, slotType slot)
 		{
 		case 0:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("sword.png").getTexture()));
-			name = "sword";
+			name = "Sword";
 			break;
 		case 1:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("hammer.png").getTexture()));
-			name = "hammer";
+			name = "Hammer";
 			break;
 		case 2:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("spear.png").getTexture()));
-			name = "spear";
+			name = "Spear";
 			break;
 		}
 		break;
@@ -37,15 +70,15 @@ void Item::Init(int powerLevel, slotType slot)
 		{
 		case 0:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("pauldron.png").getTexture()));
-			name = "pauldron";
+			name = "Pauldron";
 			break;
 		case 1:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("spaulder.png").getTexture()));
-			name = "spaulder";
+			name = "Spaulder";
 			break;
 		case 2:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("jack.png").getTexture()));
-			name = "jack chain";
+			name = "Jack chain";
 			break;
 		}
 		break;
@@ -56,15 +89,15 @@ void Item::Init(int powerLevel, slotType slot)
 	{
 	case 0:
 		setTexture(*(AssetsManager::instance().SpriteByFilename("kettle.png").getTexture()));
-		name = "kettle";
+		name = "Seige Kettle";
 		break;
 	case 1:
 		setTexture(*(AssetsManager::instance().SpriteByFilename("secret.png").getTexture()));
-		name = "secret";
+		name = "Secret";
 		break;
 	case 2:
 		setTexture(*(AssetsManager::instance().SpriteByFilename("templar.png").getTexture()));
-		name = "templar helm";
+		name = "Templar Helm";
 		break;
 	}
 	}
@@ -74,15 +107,15 @@ void Item::Init(int powerLevel, slotType slot)
 		{
 		case 0:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("gambeson.png").getTexture()));
-			name = "gambeson";
+			name = "Gambeson";
 			break;
 		case 1:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("cuirass.png").getTexture()));
-			name = "cuirass";
+			name = "Cuirass";
 			break;
 		case 2:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("main.png").getTexture()));
-			name = "mail";
+			name = "Mail";
 			break;
 		}
 		break;
@@ -91,15 +124,15 @@ void Item::Init(int powerLevel, slotType slot)
 		{
 		case 0:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("cuisses.png").getTexture()));
-			name = "cuisses";
+			name = "Cuisses";
 			break;
 		case 1:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("tassets.png").getTexture()));
-			name = "tassets";
+			name = "Tassets";
 			break;
 		case 2:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("warskirt.png").getTexture()));
-			name = "warskirt";
+			name = "Warskirt";
 			break;
 		}
 		break;
@@ -108,15 +141,15 @@ void Item::Init(int powerLevel, slotType slot)
 		{
 		case 0:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("woodRing.png").getTexture()));
-			name = "wooden ring";
+			name = "Wooden Ring";
 			break;
 		case 1:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("silverRing.png").getTexture()));
-			name = "silver ring";
+			name = "Rilver Ring";
 			break;
 		case 2:
 			setTexture(*(AssetsManager::instance().SpriteByFilename("goldRing.png").getTexture()));
-			name = "golden ring";
+			name = "Golden Ring";
 			break;
 		}
 		break;
@@ -133,6 +166,7 @@ void Item::Init(int powerLevel, slotType slot)
 		{
 			damage += damageDistribution[i].second;
 		}
+		name = "Epic " + name;
 	}
 	else if (powerLevel > 50)
 	{
@@ -143,6 +177,7 @@ void Item::Init(int powerLevel, slotType slot)
 		{
 			damage += damageDistribution[i].second;
 		}
+		name = "Rare " + name;
 	}
 	else if (powerLevel > 25)
 	{
@@ -153,6 +188,7 @@ void Item::Init(int powerLevel, slotType slot)
 		{
 			damage += damageDistribution[i].second;
 		}
+		name = "Uncommon " + name;
 	}
 	else
 	{
@@ -163,13 +199,12 @@ void Item::Init(int powerLevel, slotType slot)
 			damage += damageDistribution[i].second;
 		}
 	}
-
-	
-
+	BuildDescriptiveTest();
 }
 
 void Item::Draw(sf::RenderWindow * window)
 {
-
+	window->draw(*this);
+	window->draw(descriptiveText);
 }
 

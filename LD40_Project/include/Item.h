@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML\Graphics\RenderWindow.hpp>
+#include <SFML\Graphics\Text.hpp>
+#include <SFML\Graphics\Font.hpp>
 #include <string>
 #include <vector>
 
@@ -38,10 +40,17 @@ class Item : public sf::Sprite
 	int defence;
 	std::vector<std::pair<elementType, int>> defenceDistribution;
 
+	sf::Font font;
+
+	sf::Text descriptiveText;
+	void BuildDescriptiveTest();
+	
+	slotType type;
 public:
 	Item();
 	~Item();
 	void Init(int powerLevel, slotType slot);
 	void Draw(sf::RenderWindow* window);
+	slotType GetSlot() { return type; }
 };
 
