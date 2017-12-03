@@ -1,6 +1,7 @@
 #include <iostream>
 #include <Game.h>
 #include <AssetsManager.h>
+#include <random>
 
 #define WIN_WIDTH	1600u
 #define WIN_HEIGHT	900u
@@ -18,6 +19,7 @@ Game::~Game()
 
 bool Game::Init()
 {
+	srand(time(0));
 	m_window.create(
 		sf::VideoMode(WIN_WIDTH, WIN_HEIGHT),
 		"Scam Meier's Greedy Goblinoid 3000: Remastered (UNREGISTERED)",
@@ -26,6 +28,8 @@ bool Game::Init()
 
 	AssetsManager::instance().LoadAssets();
 	m_player = Player();
+
+	m_item.Init(26, slotType::HEAD);
 
 	if (m_room.LoadFromFile("Rooms/rm.room"))
 		return true;
@@ -59,6 +63,7 @@ void Game::drawFrame()
 {
 	m_window.clear();
 	m_player.Draw(m_window);
+	m_window.draw(m_item);
 	m_window.display();
 }
 

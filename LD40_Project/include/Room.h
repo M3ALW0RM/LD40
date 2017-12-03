@@ -5,6 +5,7 @@
 #define RM_TILE_BYTES	2u
 #define RM_FILE_BYTES	RM_ROWS * RM_COLS * RM_TILE_BYTES
 
+
 enum TileType : char
 {
 	TILE_FLOOR,
