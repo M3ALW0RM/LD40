@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include "SFML/Graphics.hpp"
 #include "Animation.h"
+#include "Room.h"
 
 class AssetsManager
 {
@@ -11,7 +12,11 @@ public:
 	{
 		FLOOR_TILE,
 		WALL_TILE,
-		OTHER_TILE,
+		DOOR_RIGHT,
+		DOOR_LEFT,
+		DOOR_BOTTOM,
+		DOOR_TOP,
+		SPECIAL,
 		EQUIPMENT
 	};
 
@@ -50,18 +55,23 @@ public:
 	unsigned int SpriteByType(ASSETS_TYPE type);
 	sf::Sprite SpriteByFilename(const std::string& filename);
 
+	Room roomByType(RoomType type, PossibleDoor door, unsigned index);
+	unsigned roomByType(RoomType type, PossibleDoor door);
+
+	float GlobalScale();
 
 private:
 	AssetsManager() = default;
 	void LoadAsset(const std::wstring& wpath, const std::string& path, ASSETS_TYPE type);
 	void LoadAnimations(const std::wstring& wpath, const std::string& path, ANIMATION_TARGET type);
+	void LoadRooms(const std::wstring& wpath, const std::string& path);
 
 private:
 	std::vector<sf::Texture*> textures;
 	std::map<std::string, sf::Sprite> filenameToSprite;
-	std::unordered_map<ASSETS_TYPE, sf::Sprite> typeToSprite;
+	std::map<ASSETS_TYPE, std::vector<sf::Sprite>> typeToSprite;
 	std::map<std::string, Animation> filenameToAnimations;
-	std::map<ANIMATION_TARGET, std::unordered_map<ANIMATION_TYPE, Animation>> typeToAnimations;
-
+	std::map<ANIMATION_TARGET, std::map<ANIMATION_TYPE, std::vector<Animation>>> typeToAnimations;
+	std::map<RoomType, std::map<PossibleDoor, std::vector<Room>>> roomTypeToRoom;
 };
 

@@ -5,6 +5,9 @@
 #define RM_TILE_BYTES	2u
 #define RM_FILE_BYTES	RM_ROWS * RM_COLS * RM_TILE_BYTES
 
+#include <vector>
+#include <SFML/Graphics.hpp>
+#include <memory>
 
 enum TileType : char
 {
@@ -28,6 +31,14 @@ enum RoomType : char
 	ROOM_MAGE
 };
 
+enum PossibleDoor : char 
+{
+	ONE = 1 << 1,
+	TWO = 1 << 2 | ONE,
+	THREE = 1 << 3 | TWO,
+	FOUR = 1 << 4 | THREE
+};
+
 class Room
 {
 public:
@@ -37,8 +48,25 @@ public:
 	bool LoadFromFile(const char* filePath);
 	void Print(); // debug
 
+	inline RoomType Type() { return m_type; };
+	inline PossibleDoor Doors() { return m_doors; };
+
+	void Draw(sf::RenderWindow& r);
+
+	std::vector<sf::Rect<float>> Hiboxes() { return hitbox; };
+
 private:
-	char	m_type;
-	char	m_doors;
+	void CreateTiles();
+
+private:
+	RoomType	m_type;
+	PossibleDoor m_doors;
+
+	std::vector<sf::Sprite> tiles;
+	std::vector<sf::Rect<float>> hitbox;
+
+	std::shared_ptr<sf::Texture> text;
+	sf::Sprite tileRoom;
+
 	char*	m_tileData;
 };

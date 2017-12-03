@@ -27,14 +27,24 @@ bool Game::Init()
 	m_window.setFramerateLimit(FPS_CAP);
 
 	AssetsManager::instance().LoadAssets();
+
 	m_player = Player();
 
+	m_room = AssetsManager::instance().roomByType(ROOM_PASSAGE, FOUR, 0);
 	m_item.Init(26, slotType::HEAD);
 
-	if (m_room.LoadFromFile("Rooms/rm.room"))
-		return true;
+	m_room.Print();
 
-	return false;
+	return true;
+	/*if (m_room.LoadFromFile("Rooms/rm.room"))
+	{
+	#ifdef _DEBUG
+		m_room.Print();
+	#endif
+		return true;
+	}
+
+	return false;*/
 }
 
 void Game::Run()
@@ -62,7 +72,11 @@ void Game::update()
 void Game::drawFrame()
 {
 	m_window.clear();
-	m_player.Draw(m_window);
+
+	m_room.Draw(m_window);
+	m_player.DrawAnimations(m_window);
+	m_window.draw(m_player.m_healthBar);
+	m_window.draw(m_player.m_staminaBar);
 	m_window.draw(m_item);
 	m_window.display();
 }
