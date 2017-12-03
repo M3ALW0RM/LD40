@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\AssetsManager.cpp" />
+    <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GearBar.cpp" />
     <ClCompile Include="src\LD40_Project.cpp" />
@@ -32,6 +33,8 @@
   <ItemGroup>
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\AssetsManager.h" />
+    <ClInclude Include="include\Enemy.h" />
+    <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GearBar.h" />
     <ClInclude Include="include\Map.h" />

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Window/Keyboard.hpp>
-#include "Animation.h"
+#include <Animation.h>
+#include <Entity.h>
 
 namespace PlayerControls
 {
@@ -13,7 +13,7 @@ namespace PlayerControls
 	const sf::Keyboard::Key	KEY_SPRINT		= sf::Keyboard::LShift;
 }
 
-class Player : public sf::RectangleShape
+class Player : public Entity
 {
 public:
 	enum PlayerAction : unsigned int
@@ -32,15 +32,17 @@ public:
 
 	void Update(float dt);
 	void UpdateAnimations(float dt);
-	void DrawAnimations(sf::RenderWindow& win);
+	void Draw(sf::RenderWindow& win);
 	void LookAt(const sf::Vector2f& target);
 	void SetAction(PlayerAction action, bool state);
 
-//private: LOL
-	sf::RectangleShape		m_healthBar, m_staminaBar;
-	std::vector<Animation>  anim;
-	int						m_health, m_stamina;
+protected:
+	static const int		DEFAULT_STAMINA;
+	static const float		DEFAULT_SPRINT;
 
-	float					m_speed;
+//private: LOL
+	std::vector<Animation>  m_anim;
+	sf::RectangleShape		m_staminaBar;
+	int						m_stamina;
 	bool					m_actions[COUNT];
 };
