@@ -31,7 +31,10 @@ public:
 	void LookAt(const sf::Vector2f& target);
 	void SetAction(PlayerAction action, bool state);
 
-private:
-	float			m_speed;
-	bool			m_actions[COUNT];
+//private: LOL
+	sf::RectangleShape		m_healthBar, m_staminaBar;
+	int						m_health, m_stamina;
+
+	float					m_speed;
+	bool					m_actions[COUNT];
 };

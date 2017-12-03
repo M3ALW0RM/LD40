@@ -3,6 +3,8 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+
+#include <Room.h>
 #include <Player.h>
 
 class Game
@@ -29,6 +31,7 @@ private:
 private:
 	sf::RenderWindow	m_window;
 	sf::Clock			m_gameClock;
+	Room				m_room;
 	Player				m_player;
 	bool				m_playing;
 };

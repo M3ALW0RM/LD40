@@ -20,13 +20,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GearBar.cpp" />
     <ClCompile Include="src\LD40_Project.cpp" />
+    <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Room.cpp" />
     <ClCompile Include="src\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\GearBar.h" />
+    <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\Room.h" />
     <ClInclude Include="include\Utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

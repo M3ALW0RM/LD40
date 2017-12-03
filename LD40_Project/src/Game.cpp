@@ -3,6 +3,7 @@
 
 #define WIN_WIDTH	1600u
 #define WIN_HEIGHT	900u
+#define FPS_CAP		120u
 
 Game::Game() :
 	m_playing(false)
@@ -16,16 +17,22 @@ Game::~Game()
 
 bool Game::Init()
 {
-	m_window.create(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), "Greedy Goblinoid 3000: Remastered");
-	m_window.setFramerateLimit(120u);
+	m_window.create(
+		sf::VideoMode(WIN_WIDTH, WIN_HEIGHT),
+		"Scam Meier's Greedy Goblinoid 3000: Remastered (UNREGISTERED)",
+		sf::Style::Close);
+	m_window.setFramerateLimit(FPS_CAP);
 
-	return true;
+	if (m_room.LoadFromFile("Rooms/rm.room"))
+		return true;
 
-	// return false if load fails
+	return false;
 }
 
 void Game::Run()
 {
+	m_room.Print();
+
 	m_playing = true;
 	while (m_window.isOpen())
 	{
@@ -48,8 +55,12 @@ void Game::update()
 
 void Game::drawFrame()
 {
-	m_window.clear();
+	m_window.clear({30, 30, 30});
+
 	m_window.draw(m_player);
+	m_window.draw(m_player.m_healthBar);
+	m_window.draw(m_player.m_staminaBar);
+
 	m_window.display();
 }
 

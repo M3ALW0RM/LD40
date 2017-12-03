@@ -3,22 +3,34 @@
 #include <Utils.h>
 #include <Player.h>
 
-#define DEFAULT_SPEED 200.f
+#define DEFAULT_SPEED	300.f
+#define DEFAULT_HEALTH	100.f
+#define DEFAULT_STAMINA 100.f
+
 
 Player::Player() :
-	m_speed(DEFAULT_SPEED)
+	m_speed			(DEFAULT_SPEED),
+	m_health		(DEFAULT_HEALTH),
+	m_stamina		(DEFAULT_STAMINA)
 {
-	setFillColor({0, 255, 0});
-	setSize({32.f, 32.f});
-	setOrigin(getSize().x * 0.5f, getSize().y * 0.5f);
-	setRotation(90.f);
+	setFillColor	({255, 128, 0});
+	setSize			({32.f, 32.f});
+	setOrigin		({16.f, 16.f});
+	setRotation		(90.f);
+
+	m_healthBar.setFillColor	(sf::Color::Green);
+	m_healthBar.setSize			({24.f, 4.f});
+	m_healthBar.setOrigin		({12.f, 2.f});
+
+	m_staminaBar.setFillColor	(sf::Color::Blue);
+	m_staminaBar.setSize		({24.f, 4.f});
+	m_staminaBar.setOrigin		({12.f, 2.f});
 
 	memset(m_actions, 0, COUNT);
 }
 
 Player::~Player()
 {
-	
 }
 
 void Player::Update(float dt)
@@ -28,6 +40,9 @@ void Player::Update(float dt)
 	movement.x = m_speed * (float)m_actions[MOVE_RIGHT] - m_speed * (float)m_actions[MOVE_LEFT];
 	movement.y = m_speed * (float)m_actions[MOVE_DOWN]	- m_speed * (float)m_actions[MOVE_UP];
 	move(movement *  dt);
+
+	m_healthBar.setPosition		(getPosition() - sf::Vector2f(0.f, getSize().y));
+	m_staminaBar.setPosition	(getPosition() - sf::Vector2f(0.f, getSize().y - 4.f));
 }
 
 void Player::LookAt(const sf::Vector2f& target)
