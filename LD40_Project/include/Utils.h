@@ -3,7 +3,8 @@
 #include <cmath>
 #include <SFML/System/Vector2.hpp>
 
-#define PI 3.14159265358979323846f
+#define PI		3.14159265358979323846f
+#define EPSILON	1e-6
 
 namespace vec
 {
@@ -16,8 +17,11 @@ inline float magnitude(const sf::Vector2f& vec)
 inline void normalize(sf::Vector2f& vec)
 {
 	double mag = magnitude(vec);
-	vec.x /= mag;
-	vec.y /= mag;
+	if (mag > EPSILON)
+	{
+		vec.x /= mag;
+		vec.y /= mag;
+	}
 }
 
 inline float dotProduct(const sf::Vector2f& v1, const sf::Vector2f& v2)

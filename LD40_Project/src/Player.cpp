@@ -4,9 +4,10 @@
 #include <Player.h>
 #include "AssetsManager.h"
 
-#define DEFAULT_SPEED	300.f
+#define DEFAULT_SPEED	275.f
 #define DEFAULT_HEALTH	100.f
 #define DEFAULT_STAMINA 100.f
+#define DEFAULT_SPRINT	1.8f
 
 
 Player::Player() :
@@ -43,9 +44,11 @@ void Player::Update(float dt)
 {
 	sf::Vector2f movement;
 
-	movement.x = m_speed * (float)m_actions[MOVE_RIGHT] - m_speed * (float)m_actions[MOVE_LEFT];
-	movement.y = m_speed * (float)m_actions[MOVE_DOWN]	- m_speed * (float)m_actions[MOVE_UP];
-	move(movement *  dt);
+	movement.x = (float)m_actions[MOVE_RIGHT] - (float)m_actions[MOVE_LEFT];
+	movement.y = (float)m_actions[MOVE_DOWN] - (float)m_actions[MOVE_UP];
+	vec::normalize(movement);
+
+	move(movement * m_speed * (m_actions[SPRINT] ? DEFAULT_SPRINT : 1.f) * dt);
 
 	m_healthBar.setPosition		(getPosition() - sf::Vector2f(0.f, getSize().y));
 	m_staminaBar.setPosition	(getPosition() - sf::Vector2f(0.f, getSize().y - 4.f));
@@ -64,7 +67,10 @@ void Player::UpdateAnimations(float dt)
 void Player::DrawAnimations(sf::RenderWindow& win)
 {
 	for (auto& a : anim)
+	{
+		a.setScale({ 1.66f, 1.66f }); // just a test
 		win.draw(a);
+	}
 }
 
 void Player::LookAt(const sf::Vector2f& target)

@@ -6,10 +6,11 @@
 
 namespace PlayerControls
 {
-	const sf::Keyboard::Key KEY_UP		= sf::Keyboard::W;
-	const sf::Keyboard::Key KEY_LEFT	= sf::Keyboard::A;
-	const sf::Keyboard::Key KEY_DOWN	= sf::Keyboard::S;
-	const sf::Keyboard::Key KEY_RIGHT	= sf::Keyboard::D;
+	const sf::Keyboard::Key KEY_MOVE_UP		= sf::Keyboard::W;
+	const sf::Keyboard::Key KEY_MOVE_LEFT	= sf::Keyboard::A;
+	const sf::Keyboard::Key KEY_MOVE_DOWN	= sf::Keyboard::S;
+	const sf::Keyboard::Key KEY_MOVE_RIGHT	= sf::Keyboard::D;
+	const sf::Keyboard::Key	KEY_SPRINT		= sf::Keyboard::LShift;
 }
 
 class Player : public sf::RectangleShape
@@ -21,6 +22,7 @@ public:
 		MOVE_LEFT,
 		MOVE_DOWN,
 		MOVE_RIGHT,
+		SPRINT,
 		COUNT
 	};
 
