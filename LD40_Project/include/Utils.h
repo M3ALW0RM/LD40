@@ -4,7 +4,7 @@
 #include <SFML/System/Vector2.hpp>
 
 #define PI		3.14159265358979323846f
-#define EPSILON	1e-6
+#define EPSILON	1e-6f
 
 namespace vec
 {
@@ -16,7 +16,7 @@ inline float magnitude(const sf::Vector2f& vec)
 
 inline void normalize(sf::Vector2f& vec)
 {
-	double mag = magnitude(vec);
+	float mag = magnitude(vec);
 	if (mag > EPSILON)
 	{
 		vec.x /= mag;
