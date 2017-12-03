@@ -2,6 +2,7 @@
 
 #include <Utils.h>
 #include <Player.h>
+#include "AssetsManager.h"
 
 #define DEFAULT_SPEED	300.f
 #define DEFAULT_HEALTH	100.f
@@ -27,6 +28,11 @@ Player::Player() :
 	m_staminaBar.setOrigin		({12.f, 2.f});
 
 	memset(m_actions, 0, COUNT);
+	anim = AssetsManager::instance().AnimationByTarget(AssetsManager::PLAYER, 0);
+	for (auto& a : anim)
+	{
+		a.FrameSecond(DEFAULT_SPEED / 10.f);
+	}
 }
 
 Player::~Player()
@@ -43,6 +49,22 @@ void Player::Update(float dt)
 
 	m_healthBar.setPosition		(getPosition() - sf::Vector2f(0.f, getSize().y));
 	m_staminaBar.setPosition	(getPosition() - sf::Vector2f(0.f, getSize().y - 4.f));
+	UpdateAnimations(dt);
+}
+
+void Player::UpdateAnimations(float dt)
+{
+	for (auto& a : anim)
+	{
+		a.Update(dt);
+		a.setPosition(getPosition());
+	}
+}
+
+void Player::DrawAnimations(sf::RenderWindow& win)
+{
+	for (auto& a : anim)
+		win.draw(a);
 }
 
 void Player::LookAt(const sf::Vector2f& target)
@@ -52,9 +74,17 @@ void Player::LookAt(const sf::Vector2f& target)
 
 	float angle = vec::angleBetween({0.f, 1.f}, posToTarget, true);
 	if (target.x < getPosition().x)
+	{
 		setRotation(angle + 90.f);
+		for (auto& a : anim)
+			a.setRotation(angle + 180.f);
+	}
 	else
+	{
 		setRotation(270.f - angle);
+		for (auto& a : anim)
+			a.setRotation(180.f - angle);
+	}
 		
 }
 

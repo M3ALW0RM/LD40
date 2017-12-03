@@ -1,5 +1,6 @@
 #include <iostream>
 #include <Game.h>
+#include <AssetsManager.h>
 
 #define WIN_WIDTH	1600u
 #define WIN_HEIGHT	900u
@@ -22,6 +23,10 @@ bool Game::Init()
 		"Scam Meier's Greedy Goblinoid 3000: Remastered (UNREGISTERED)",
 		sf::Style::Close);
 	m_window.setFramerateLimit(FPS_CAP);
+
+	AssetsManager::instance().LoadAssets();
+
+	m_player = Player();
 
 	if (m_room.LoadFromFile("Rooms/rm.room"))
 		return true;
@@ -57,7 +62,7 @@ void Game::drawFrame()
 {
 	m_window.clear({30, 30, 30});
 
-	m_window.draw(m_player);
+	m_player.DrawAnimations(m_window);
 	m_window.draw(m_player.m_healthBar);
 	m_window.draw(m_player.m_staminaBar);
 
