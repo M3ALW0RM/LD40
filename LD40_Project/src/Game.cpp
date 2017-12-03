@@ -28,7 +28,12 @@ bool Game::Init()
 
 	m_player = Player();
 
-	if (m_room.LoadFromFile("Rooms/rm.room"))
+	m_room = AssetsManager::instance().roomByType(ROOM_PASSAGE, FOUR, 0);
+
+	m_room.Print();
+
+	return true;
+	/*if (m_room.LoadFromFile("Rooms/rm.room"))
 	{
 	#ifdef _DEBUG
 		m_room.Print();
@@ -36,7 +41,7 @@ bool Game::Init()
 		return true;
 	}
 
-	return false;
+	return false;*/
 }
 
 void Game::Run()
@@ -65,10 +70,10 @@ void Game::drawFrame()
 {
 	m_window.clear();
 
+	m_room.Draw(m_window);
 	m_player.DrawAnimations(m_window);
 	m_window.draw(m_player.m_healthBar);
 	m_window.draw(m_player.m_staminaBar);
-
 	m_window.display();
 }
 

@@ -32,7 +32,7 @@ Player::Player() :
 	anim = AssetsManager::instance().AnimationByTarget(AssetsManager::PLAYER, 0);
 	for (auto& a : anim)
 	{
-		a.FrameSecond(DEFAULT_SPEED / 10.f);
+		a.FrameSecond(DEFAULT_SPEED / 15.f);
 	}
 }
 
@@ -52,6 +52,7 @@ void Player::Update(float dt)
 
 	m_healthBar.setPosition		(getPosition() - sf::Vector2f(0.f, getSize().y));
 	m_staminaBar.setPosition	(getPosition() - sf::Vector2f(0.f, getSize().y - 4.f));
+
 	UpdateAnimations(dt);
 }
 
