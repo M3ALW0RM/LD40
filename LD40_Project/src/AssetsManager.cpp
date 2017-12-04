@@ -9,7 +9,8 @@ constexpr char* doorsLeftFolder = "doors/door_left/";
 constexpr char* doorsTopFolder = "doors/door_top/";
 constexpr char* doorsBottomFolder = "doors/door_bottom/";
 constexpr char* equipementsFolder = "equipments/";
-constexpr char* animationPlayerFolder = "playerAnimationNaked/";
+constexpr char* animationPlayerFolder = "playerAnimations/";
+constexpr char* animationSpecialFolder = "special/";
 constexpr char* roomsFolder = "rooms/";
 //add more path when needed
 
@@ -21,7 +22,8 @@ constexpr wchar_t* doorsLeftFolderWide = L"doors/door_left/";
 constexpr wchar_t* doorsTopFolderWide = L"doors/door_top/";
 constexpr wchar_t* doorsBottomFolderWide = L"doors/door_bottom/";
 constexpr wchar_t* equipementsFolderWide = L"equipments/";
-constexpr wchar_t* animationPlayerFolderWide = L"playerAnimationNaked/";
+constexpr wchar_t* animationPlayerFolderWide = L"playerAnimations/";
+constexpr wchar_t* animationSpecialFolderWide = L"special/";
 constexpr wchar_t* roomsFolderWide = L"rooms/";
 
 constexpr int spriteSize = 32u;
@@ -42,6 +44,8 @@ void AssetsManager::LoadAssets()
 	LoadAsset(assetsPathWide + doorsBottomFolderWide + L"*.png", assetsPath + doorsBottomFolder, DOOR_BOTTOM);
 
 	LoadAnimations(assetsPathWide + animationPlayerFolderWide + L"*.png", assetsPath + animationPlayerFolder, PLAYER);
+	LoadAnimations(assetsPathWide + animationSpecialFolderWide + L"*.png", assetsPath + animationSpecialFolder, PROPS);
+
 	LoadRooms(assetsPathWide + roomsFolderWide + L"*.rm", assetsPath + roomsFolder);
 }
 
@@ -82,12 +86,28 @@ sf::Sprite AssetsManager::SpriteByFilename(const std::string& filename)
 
 Room AssetsManager::roomByType(RoomType type, PossibleDoor door, unsigned index)
 {
-	return roomTypeToRoom[type][door][index];
+	unsigned int size = 0;
+	for (auto& t : roomTypeToRoom[type])
+	{
+		if (door & t.first)
+			size += t.second.size();
+		if (size >= index)
+		{
+			size -= index;
+			return t.second[size];
+		}
+	}
 }
 
 unsigned AssetsManager::roomByType(RoomType type, PossibleDoor door)
 {
-	return roomTypeToRoom[type][door].size();
+	unsigned int size = 0;
+	for (auto& t : roomTypeToRoom[type])
+	{
+		if (door & t.first)
+			size += t.second.size();
+	}
+	return size;
 }
 
 float AssetsManager::GlobalScale()
@@ -143,15 +163,13 @@ void AssetsManager::LoadAnimations(const std::wstring& wpath, const std::string&
 
 			anim.scale({ scaleFactor, scaleFactor });
 
-			ANIMATION_TYPE type;
+			ANIMATION_TYPE type = IDLE;
 			if (filename.find("Feet") != std::string::npos)
 				type = FEET;
 			else if(filename.find("Hand") != std::string::npos)
 				type = HAND;
 			else if (filename.find("Head") != std::string::npos)
 				type = HEAD;
-			else if (filename.find("Idle") != std::string::npos)
-				type = IDLE;
 			else if (filename.find("Attack") != std::string::npos)
 				type = ATTACK;
 

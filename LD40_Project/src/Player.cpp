@@ -20,7 +20,7 @@ Player::Player() :
 	m_staminaBar.setOrigin({16.f, 2.f});
 
 	memset(m_actions, 0, COUNT);
-	m_anim = AssetsManager::instance().AnimationByTarget(AssetsManager::PLAYER, 0);
+	m_anim = AssetsManager::instance().AnimationByTarget(AssetsManager::PLAYER, 2);
 
 	for (auto& a : m_anim)
 		a.setScale({1.5f, 1.5f});

@@ -33,10 +33,10 @@ enum RoomType : char
 
 enum PossibleDoor : char 
 {
-	ONE = 1 << 1,
-	TWO = 1 << 2 | ONE,
-	THREE = 1 << 3 | TWO,
-	FOUR = 1 << 4 | THREE
+	LEFT   = 1 << 1,
+	RIGHT  = 1 << 2,
+	TOP    = 1 << 3,
+	BOTTOM = 1 << 4
 };
 
 class Room
@@ -55,6 +55,18 @@ public:
 
 	std::vector<sf::Rect<float>> Hiboxes() { return hitbox; };
 
+	void GenerateDoors(PossibleDoor doors);
+
+	sf::Vector2f StartingPoint() { return startingPoint; };
+
+	void SetPosition(sf::Vector2f newPos);
+
+	inline float  SizeTileX() { return sizeTileX; };
+	inline float  SizeTileY() { return sizeTileY; };
+
+	inline float  SizeRoomX() { return sizeTileX * RM_COLS; };
+	inline float  SizeRoomY() { return sizeTileY * RM_ROWS; };
+
 private:
 	void CreateTiles();
 
@@ -68,5 +80,9 @@ private:
 	std::shared_ptr<sf::Texture> text;
 	sf::Sprite tileRoom;
 
+	sf::Vector2f startingPoint;
+
 	char*	m_tileData;
+
+	static float sizeTileX, sizeTileY;
 };

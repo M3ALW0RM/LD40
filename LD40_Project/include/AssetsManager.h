@@ -23,15 +23,16 @@ public:
 	enum ANIMATION_TARGET
 	{
 		ENEMY,
-		PLAYER
+		PLAYER,
+		PROPS
 	};
 
 	enum ANIMATION_TYPE
 	{
 		IDLE,
+		FEET,
 		HAND,
 		HEAD,
-		FEET,
 		ATTACK
 	};
 
