@@ -4,6 +4,8 @@
 #include <Animation.h>
 #include <Entity.h>
 #include <Room.h>
+#include <Item.h>
+#include <map>
 
 namespace PlayerControls
 {
@@ -37,6 +39,7 @@ public:
 	void Draw(sf::RenderWindow& win);
 	void LookAt(const sf::Vector2f& target);
 	void SetAction(PlayerAction action, bool state);
+	void PickupItem(Item* item);
 
 private:
 	bool checkCollisions();
@@ -44,6 +47,8 @@ private:
 	static const int		DEFAULT_STAMINA;
 	static const float		DEFAULT_SPRINT;
 
+
+	std::map<slotType, Item*> inventory;
 	Room*					m_pCurrentRoom;
 	std::vector<Animation>  m_anim;
 	sf::RectangleShape		m_staminaBar;

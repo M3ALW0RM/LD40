@@ -23,7 +23,8 @@ public:
 	enum ANIMATION_TARGET
 	{
 		ENEMY,
-		PLAYER
+		PLAYER,
+		PROPS
 	};
 
 	enum ANIMATION_TYPE

@@ -6,6 +6,7 @@
 
 #include <Room.h>
 #include <Player.h>
+#include <Item.h>
 
 class Game
 {
@@ -33,5 +34,6 @@ private:
 	sf::Clock			m_gameClock;
 	Room				m_room;
 	Player				m_player;
+	Item				m_item;
 	bool				m_playing;
 };
