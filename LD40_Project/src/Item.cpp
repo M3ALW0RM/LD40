@@ -10,7 +10,7 @@ void Item::BuildDescriptiveTest()
 	std::string tmp;
 	tmp += name;
 	tmp += "\n";
-	tmp += "Damage: " + std::to_string(damage) + "\n";
+	tmp += "Damage: " + std::to_string(damage) + "\n"; 
 	for (int i = 0; i < damageDistribution.size(); ++i)
 	{
 		switch (damageDistribution[i].first)
