@@ -3,6 +3,8 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <Animation.h>
 #include <Entity.h>
+#include <Item.h>
+#include <map>
 
 namespace PlayerControls
 {
@@ -35,12 +37,14 @@ public:
 	void Draw(sf::RenderWindow& win);
 	void LookAt(const sf::Vector2f& target);
 	void SetAction(PlayerAction action, bool state);
+	void PickupItem(Item* item);
 
 protected:
 	static const int		DEFAULT_STAMINA;
 	static const float		DEFAULT_SPRINT;
 
 //private: LOL
+	std::map<slotType, Item*> inventory;
 	std::vector<Animation>  m_anim;
 	sf::RectangleShape		m_staminaBar;
 	int						m_stamina;

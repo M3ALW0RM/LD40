@@ -24,6 +24,7 @@
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GearBar.cpp" />
+    <ClCompile Include="src\Item.cpp" />
     <ClCompile Include="src\LD40_Project.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Player.cpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GearBar.h" />
+    <ClInclude Include="include\Item.h" />
     <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Room.h" />
