@@ -23,13 +23,12 @@ bool Game::Init()
 	m_window.setFramerateLimit(FPS_CAP);
 
 	AssetsManager::instance().LoadAssets();
-	m_room = AssetsManager::instance().roomByType(ROOM_PASSAGE, PossibleDoor(LEFT | RIGHT | TOP | BOTTOM), 0);
+	m_room = AssetsManager::instance().roomByType(ROOM_START, PossibleDoor(RIGHT), 1);
 	
 	m_player = Player();
-
-	m_room = AssetsManager::instance().roomByType(ROOM_PASSAGE, FOUR, 0);
-
-	m_room.Print();
+	m_player.ChangeRoom(&m_room);
+	m_player.setPosition(m_room.StartingPoint());
+	m_player.UpdateAnimations(0.f);
 
 	Item* i = new Item();
 	i->Init(1, slotType::CHEST);

@@ -127,7 +127,7 @@ void Room::CreateTiles()
 				sf::Sprite tile;
 				tile = AssetsManager::instance().SpriteByType(AssetsManager::ASSETS_TYPE(AssetsManager::FLOOR_TILE), 0);
 				tile.setPosition(x / 2 * tile.getTexture()->getSize().x, y * tile.getTexture()->getSize().y);
-				hitbox.push_back(sf::Rect<float>({ x / 2 * sizeTileX, y * sizeTileY }, { sizeTileX, sizeTileY }));
+				//hitbox.push_back(sf::Rect<float>({ x / 2 * sizeTileX, y * sizeTileY }, { sizeTileX, sizeTileY }));
 				tiles.push_back(tile);
 				if (m_tileData[y * RM_COLS * RM_TILE_BYTES + x + 1] != char(5))
 				{
