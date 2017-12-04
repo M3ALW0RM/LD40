@@ -8,7 +8,7 @@ public:
 	Entity();
 	~Entity();
 
-	virtual void Update(float dt) = 0;
+	virtual void Tick(float dt) = 0;
 	virtual void Draw(sf::RenderWindow& win) = 0;
 
 protected:

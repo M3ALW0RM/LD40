@@ -17,7 +17,7 @@ public:
 	void Run();
 
 private:
-	void update();
+	void tick();
 	void drawFrame();
 	void processEvents();
 	void onKeyEvent(sf::Keyboard::Key key, bool pressed = true);

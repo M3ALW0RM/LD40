@@ -29,9 +29,9 @@ public:
 	enum ANIMATION_TYPE
 	{
 		IDLE,
+		FEET,
 		HAND,
 		HEAD,
-		FEET,
 		ATTACK
 	};
 

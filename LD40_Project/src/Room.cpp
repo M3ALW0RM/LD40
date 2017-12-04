@@ -42,9 +42,9 @@ void Room::Print()
 	}		
 }
 
-void Room::Draw(sf::RenderWindow & r)
+void Room::Draw(sf::RenderWindow& win)
 {
-	r.draw(tileRoom);
+	win.draw(tileRoom);
 }
 
 void Room::CreateTiles()
@@ -54,9 +54,13 @@ void Room::CreateTiles()
 	{
 		for (size_t x = 0u; x < RM_COLS * RM_TILE_BYTES; x += RM_TILE_BYTES)
 		{
-			sf::Sprite tile = AssetsManager::instance().SpriteByType(AssetsManager::ASSETS_TYPE(m_tileData[y * RM_COLS  * RM_TILE_BYTES + x]), m_tileData[y * RM_COLS * RM_TILE_BYTES + x + 1]);
+			AssetsManager::ASSETS_TYPE type = AssetsManager::ASSETS_TYPE(m_tileData[y * RM_COLS  * RM_TILE_BYTES + x]);
+			sf::Sprite tile = AssetsManager::instance().SpriteByType(type, m_tileData[y * RM_COLS * RM_TILE_BYTES + x + 1]);
 			tile.setPosition(x / 2 * tile.getTexture()->getSize().x, y * tile.getTexture()->getSize().y);
-			hitbox.push_back(sf::Rect<float>({ x / 2 * tile.getTexture()->getSize().x * tile.getScale().x, y * tile.getTexture()->getSize().y * tile.getScale().y }, { tile.getTexture()->getSize().x * tile.getScale().x, tile.getTexture()->getSize().y * tile.getScale().y }));
+
+			if (type == AssetsManager::WALL_TILE)
+				hitbox.push_back(sf::FloatRect({ x / 2 * tile.getTexture()->getSize().x * tile.getScale().x, y * tile.getTexture()->getSize().y * tile.getScale().y }, { tile.getTexture()->getSize().x * tile.getScale().x, tile.getTexture()->getSize().y * tile.getScale().y }));
+			
 			tiles.push_back(tile);
 		}
 	}

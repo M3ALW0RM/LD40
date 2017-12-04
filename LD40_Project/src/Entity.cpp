@@ -8,8 +8,8 @@ Entity::Entity() :
 	m_speed(DEFAULT_SPEED)
 {
 	m_healthBar.setFillColor(sf::Color::Green);
-	m_healthBar.setSize({ 32.f, 4.f });
-	m_healthBar.setOrigin({ 16.f, 2.f });
+	m_healthBar.setSize({ 48.f, 6.f });
+	m_healthBar.setOrigin({ 24.f, 3.f });
 }
 
 Entity::~Entity()

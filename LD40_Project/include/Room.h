@@ -33,10 +33,10 @@ enum RoomType : char
 
 enum PossibleDoor : char 
 {
-	ONE = 1 << 1,
-	TWO = 1 << 2 | ONE,
-	THREE = 1 << 3 | TWO,
-	FOUR = 1 << 4 | THREE
+	LEFT	= 1 << 1,
+	RIGHT	= 1 << 2,
+	TOP		= 1 << 3,
+	BOTTOM	= 1 << 4
 };
 
 class Room
@@ -50,11 +50,11 @@ public:
 
 	inline RoomType Type() { return m_type; };
 	inline PossibleDoor Doors() { return m_doors; };
+	inline const std::vector<sf::FloatRect>& Hitboxes() { return hitbox; };
 
-	void Draw(sf::RenderWindow& r);
+	void Draw(sf::RenderWindow& win);
 
-	std::vector<sf::Rect<float>> Hiboxes() { return hitbox; };
-
+	
 private:
 	void CreateTiles();
 
@@ -63,7 +63,7 @@ private:
 	PossibleDoor m_doors;
 
 	std::vector<sf::Sprite> tiles;
-	std::vector<sf::Rect<float>> hitbox;
+	std::vector<sf::FloatRect> hitbox;
 
 	std::shared_ptr<sf::Texture> text;
 	sf::Sprite tileRoom;

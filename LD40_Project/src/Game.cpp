@@ -2,8 +2,8 @@
 #include <Game.h>
 #include <AssetsManager.h>
 
-#define WIN_WIDTH	1600u
-#define WIN_HEIGHT	900u
+#define WIN_WIDTH	1536u
+#define WIN_HEIGHT	864u
 #define FPS_CAP		120u
 
 Game::Game() :
@@ -18,30 +18,17 @@ Game::~Game()
 
 bool Game::Init()
 {
-	m_window.create(
-		sf::VideoMode(WIN_WIDTH, WIN_HEIGHT),
-		"Scam Meier's Greedy Goblinoid 3000: Remastered (UNREGISTERED)",
-		sf::Style::Close);
+	m_window.create(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), "???", sf::Style::Close);
 	m_window.setFramerateLimit(FPS_CAP);
 
 	AssetsManager::instance().LoadAssets();
-
+	m_room = AssetsManager::instance().roomByType(ROOM_PASSAGE, PossibleDoor(LEFT | RIGHT | TOP | BOTTOM), 0);
+	
 	m_player = Player();
-
-	m_room = AssetsManager::instance().roomByType(ROOM_PASSAGE, FOUR, 0);
-
-	m_room.Print();
+	m_player.ChangeRoom(&m_room);
+	m_player.setPosition({ 200.f, 200.f });
 
 	return true;
-	/*if (m_room.LoadFromFile("Rooms/rm.room"))
-	{
-	#ifdef _DEBUG
-		m_room.Print();
-	#endif
-		return true;
-	}
-
-	return false;*/
 }
 
 void Game::Run()
@@ -52,18 +39,18 @@ void Game::Run()
 		processEvents();
 		if (m_playing)
 		{
-			update();
+			tick();
 			drawFrame();
 		}
 	}
 }
 
-void Game::update()
+void Game::tick()
 {
 	float dt = deltaTime(m_gameClock.restart());
 
 	m_player.LookAt((sf::Vector2f)sf::Mouse::getPosition(m_window));
-	m_player.Update(dt);
+	m_player.Tick(dt);
 }
 
 void Game::drawFrame()
@@ -71,9 +58,8 @@ void Game::drawFrame()
 	m_window.clear();
 
 	m_room.Draw(m_window);
-	m_player.DrawAnimations(m_window);
-	m_window.draw(m_player.m_healthBar);
-	m_window.draw(m_player.m_staminaBar);
+	m_player.Draw(m_window);
+
 	m_window.display();
 }
 

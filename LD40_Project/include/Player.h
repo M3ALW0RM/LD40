@@ -3,6 +3,7 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <Animation.h>
 #include <Entity.h>
+#include <Room.h>
 
 namespace PlayerControls
 {
@@ -30,17 +31,20 @@ public:
 	Player();
 	~Player();
 
-	void Update(float dt);
+	void Tick(float dt);
+	void ChangeRoom(Room* pCurrentRoom);
 	void UpdateAnimations(float dt);
 	void Draw(sf::RenderWindow& win);
 	void LookAt(const sf::Vector2f& target);
 	void SetAction(PlayerAction action, bool state);
 
-protected:
+private:
+	bool checkCollisions();
+
 	static const int		DEFAULT_STAMINA;
 	static const float		DEFAULT_SPRINT;
 
-//private: LOL
+	Room*					m_pCurrentRoom;
 	std::vector<Animation>  m_anim;
 	sf::RectangleShape		m_staminaBar;
 	int						m_stamina;

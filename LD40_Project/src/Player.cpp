@@ -10,48 +10,67 @@ const float Player::DEFAULT_SPRINT	= 1.8f;
 Player::Player() :
 	m_stamina(DEFAULT_STAMINA)
 {
-	setFillColor({255, 128, 0});
-	setSize({48.f, 48.f});
-	setOrigin({16.f, 16.f});
+	setSize({ 16.f, 16.f });
+	setOrigin({8.f, 8.f});
 	setRotation(90.f);
 
 	m_staminaBar.setFillColor(sf::Color::Blue);
-	m_staminaBar.setSize({32.f, 4.f});
-	m_staminaBar.setOrigin({16.f, 2.f});
+	m_staminaBar.setSize({48.f, 6.f});
+	m_staminaBar.setOrigin({24.f, 3.f});
 
 	memset(m_actions, 0, COUNT);
 	m_anim = AssetsManager::instance().AnimationByTarget(AssetsManager::PLAYER, 0);
 
 	for (auto& a : m_anim)
-		a.setScale({1.5f, 1.5f});
+		a.setScale({2.f, 2.f});
 }
 
 Player::~Player()
 {
 }
 
-void Player::Update(float dt)
+void Player::Tick(const float dt)
 {
+	m_speed = 0.f;
+	sf::Vector2f oldPos = getPosition();
 	sf::Vector2f movement;
-
 	movement.x = (float)m_actions[MOVE_RIGHT] - (float)m_actions[MOVE_LEFT];
 	movement.y = (float)m_actions[MOVE_DOWN] - (float)m_actions[MOVE_UP];
-	
 	vec::normalize(movement);
+
 	if (movement.x != 0.f || movement.y != 0.f)
 	{
 		m_speed = DEFAULT_SPEED * (m_actions[SPRINT] ? DEFAULT_SPRINT : 1.f);
-		move(movement * m_speed * dt);
+		setPosition(getPosition() + movement * m_speed * dt);
 
+		if (checkCollisions())
+		{
+			setPosition(oldPos);
+			m_speed = 0.f;
+		}
+	}
+
+	if (m_speed != 0.f)
 		UpdateAnimations(dt);
-	}
-	else
-	{
-		m_speed = 0.f;
-	}
 
-	m_healthBar.setPosition(getPosition() - sf::Vector2f(0.f, 32.f));
-	m_staminaBar.setPosition(getPosition() - sf::Vector2f(0.f, 28.f));
+	m_healthBar.setPosition(getPosition() - sf::Vector2f(0.f, 48.f));
+	m_staminaBar.setPosition(getPosition() - sf::Vector2f(0.f, 42.f));
+}
+
+void Player::ChangeRoom(Room* pCurrentRoom)
+{
+	m_pCurrentRoom = pCurrentRoom;
+}
+
+bool Player::checkCollisions()
+{
+	const std::vector<sf::FloatRect>& hitboxes = m_pCurrentRoom->Hitboxes();
+	for (auto& box : hitboxes)
+	{
+		if (getGlobalBounds().intersects(box))
+			return true;
+	}
+	return false;
 }
 
 void Player::UpdateAnimations(float dt)
