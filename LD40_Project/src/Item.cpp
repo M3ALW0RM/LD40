@@ -35,7 +35,8 @@ Item::Item()
 {
 	font.loadFromFile("Resources/arial.ttf");
 	descriptiveText.setFont(font);
-	setPosition(sf::Vector2f(100, 100));
+	this->setScale(sf::Vector2f(2, 2));
+	setPosition(sf::Vector2f(0, 0));
 }
 
 
@@ -202,9 +203,15 @@ void Item::Init(int powerLevel, slotType slot)
 	BuildDescriptiveTest();
 }
 
-void Item::Draw(sf::RenderWindow * window)
+void Item::Draw(sf::RenderWindow * window, sf::Vector2f pos)
 {
+	setPosition(pos);
 	window->draw(*this);
-	window->draw(descriptiveText);
+}
+
+void Item::DrawDescription(sf::RenderWindow * window)
+{
+	if(drawDescription)
+		window->draw(descriptiveText);
 }
 

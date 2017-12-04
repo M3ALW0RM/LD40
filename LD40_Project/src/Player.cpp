@@ -67,12 +67,67 @@ void Player::UpdateAnimations(float dt)
 void Player::Draw(sf::RenderWindow& win)
 {
 	// Widgets
-	win.draw(m_healthBar);
-	win.draw(m_staminaBar);
-
 	// Animations
 	for (auto& a : m_anim)
 		win.draw(a);
+
+	win.draw(m_healthBar);
+	win.draw(m_staminaBar);
+
+	sf::Vector2i mousePos = sf::Mouse::getPosition()- win.getPosition();
+	std::map<slotType, Item*>::iterator it = inventory.begin();
+	for (int i = 0; i < inventory.size(); ++i)
+	{
+		it = inventory.begin();
+		std::advance(it, i);
+		sf::FloatRect f = (*it).second->getGlobalBounds();
+		if ((*it).second->getGlobalBounds().contains((sf::Vector2f)mousePos))
+		{
+			(*it).second->drawDescription = true;
+		}
+	}
+
+	it = inventory.begin();
+	for (int i = 0; i < inventory.size(); ++i)
+	{
+		it = inventory.begin();
+		std::advance(it, i);
+		switch ((*it).first)
+		{
+		case slotType::HEAD:
+			(*it).second->Draw(&win, sf::Vector2f(0, 0));
+			break;
+		case slotType::SHOULDER:
+			(*it).second->Draw(&win, sf::Vector2f(0, ITEM_HEIGHT));
+			break;
+		case slotType::CHEST:
+			(*it).second->Draw(&win, sf::Vector2f(0, ITEM_HEIGHT*2));
+			break;
+		case slotType::HAND:
+			(*it).second->Draw(&win, sf::Vector2f(0, ITEM_HEIGHT*4));
+			break;
+		case slotType::RING:
+			(*it).second->Draw(&win, sf::Vector2f(ITEM_WIDTH, ITEM_HEIGHT*4));
+			break;
+		case slotType::PANTS:
+			(*it).second->Draw(&win, sf::Vector2f(0, ITEM_HEIGHT*3));
+			break;
+
+
+		default:
+			break;
+		}
+
+
+	}
+
+	for (int i = 0; i < inventory.size(); ++i)
+	{
+		it = inventory.begin();
+		std::advance(it, i);
+		(*it).second->DrawDescription(&win);
+		(*it).second->drawDescription = false;
+	}
 }
 
 void Player::LookAt(const sf::Vector2f& target)

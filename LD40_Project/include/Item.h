@@ -7,8 +7,8 @@
 #include <string>
 #include <vector>
 
-#define ITEM_WIDTH 32
-#define ITEM_HEIGHT 32
+#define ITEM_WIDTH 64
+#define ITEM_HEIGHT 64
 #define LOW_PWR_COLOR sf::Color::White
 #define MID_PWR_COLOR sf::Color::Green
 #define HIGH_PWR_COLOR sf::Color::Yellow
@@ -46,11 +46,14 @@ class Item : public sf::Sprite
 	void BuildDescriptiveTest();
 	
 	slotType type;
+
 public:
 	Item();
 	~Item();
+	bool drawDescription = false;
 	void Init(int powerLevel, slotType slot);
-	void Draw(sf::RenderWindow* window);
+	void Draw(sf::RenderWindow* window, sf::Vector2f pos);
+	void DrawDescription(sf::RenderWindow* window);
 	slotType GetSlot() { return type; }
 };
 

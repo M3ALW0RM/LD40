@@ -35,6 +35,27 @@ bool Game::Init()
 
 	m_room.Print();
 
+	Item* i = new Item();
+	i->Init(1, slotType::CHEST);
+	Item* i2 = new Item();
+	i2->Init(35, slotType::HEAD);
+	Item* i3 = new Item();
+	i3->Init(50, slotType::PANTS);
+	Item* i4 = new Item();
+	i4->Init(26, slotType::HAND);
+	Item* i5 = new Item();
+	i5->Init(77, slotType::SHOULDER);
+	Item* i6 = new Item();
+	i6->Init(1, slotType::RING);
+	Item* i7 = new Item();
+	i7->Init(1, slotType::PANTS);
+	m_player.PickupItem(i);
+	m_player.PickupItem(i2);
+	m_player.PickupItem(i3);
+	m_player.PickupItem(i4);
+	m_player.PickupItem(i5);
+	m_player.PickupItem(i6);
+	m_player.PickupItem(i7);
 	return true;
 	/*if (m_room.LoadFromFile("Rooms/rm.room"))
 	{
@@ -75,7 +96,6 @@ void Game::drawFrame()
 
 	m_room.Draw(m_window);
 	m_player.Draw(m_window);
-	m_item.Draw(&m_window);
 	m_window.display();
 }
 
